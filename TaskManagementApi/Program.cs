@@ -2,15 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Formatting.Json;
 using System.Diagnostics;
+using Task_Management;
 using Task_Management.Clients;
 using Task_Management.Data;
 using TaskManagement.Clients;
 
-System.Diagnostics.Trace.AutoFlush = true;
-
-var builder = WebApplication.CreateBuilder(args);
-
-
+Trace.AutoFlush = true; 
 Tracer.TaskManagerTrace.Switch.Level = SourceLevels.All;
 Tracer.TaskManagerTrace.Listeners.Add(
     new TextWriterTraceListener("logs/taskmanagementTrace.log"));
@@ -25,17 +22,17 @@ Log.Logger = new LoggerConfiguration()
         rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
+var builder = WebApplication.CreateBuilder(args);
+
 builder.Host.UseSerilog();
 
 builder.Services.AddControllersWithViews();
 
-var connectionString =
-    builder.Configuration.GetConnectionString("task_management")
-    ?? throw new InvalidOperationException(
-        "Строка подключения 'task_management' не найдена.");
+var connectionString = builder.Configuration.GetConnectionString("task_management")
+    ?? throw new InvalidOperationException("Строка подключения 'task_management' не найдена.");
 
-builder.Services.AddDbContext<TaskManagementDbContext>(
-    options => options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<TaskManagementDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddHttpClient<UserClient>(client =>
 {
@@ -65,9 +62,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-public static class Tracer
-{
-    public static TraceSource TaskManagerTrace =
-        new TraceSource("TaskManagerTrace", SourceLevels.Verbose);
-}

@@ -1,15 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using ProjectService.Data;
 using ProjectService.Clients;
+using ProjectService.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
 builder.Services.AddDbContext<ProjectDbContext>(options =>
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString(
-            "project_management")));
+        builder.Configuration.GetConnectionString("project_management")));
 
 builder.Services.AddHttpClient<UserClient>(client =>
 {
@@ -28,7 +26,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.MapControllers();
 
 app.Run();
