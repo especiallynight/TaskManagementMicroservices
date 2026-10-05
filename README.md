@@ -3,7 +3,9 @@
 Проверка создания задачи с существующем пользователь, статус - 201
 
 
+
 <img width="1069" height="1035" alt="image" src="https://github.com/user-attachments/assets/bf7bf375-82be-44c9-8e10-dbce0ae32b85" />
+
 
 
 
@@ -21,3 +23,14 @@
 
 
 
+
+<img width="1111" height="854" alt="image" src="https://github.com/user-attachments/assets/0615c925-df3b-4330-93cf-84697276fe01" />
+
+
+
+
+Тест остановленного сервиса, статус - 503
+
+
+
+<img width="1122" height="887" alt="image" src="https://github.com/user-attachments/assets/b70d9d0e-2f1b-4136-88c0-2a1cf7f67090" />
